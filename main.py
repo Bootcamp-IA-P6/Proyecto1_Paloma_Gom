@@ -19,6 +19,8 @@ def calculate_fare(seconds_stopped, seconds_moving):
     """
     logging.info(f"Calculando tarifa: parado={seconds_stopped:.1f}s, movimiento={seconds_moving:.1f}s")
     fare = seconds_stopped * 0.02 + seconds_moving * 0.05
+    # Redondear a 2 decimales para evitar problemas de precisión con dinero
+    fare = round(fare, 2)
     print(f"Este es el total: {fare}€")
     return fare
 
