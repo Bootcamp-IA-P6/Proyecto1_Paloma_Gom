@@ -6,7 +6,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(message)s',
     handlers=[
-        logging.FileHandler('taximeter.log', encoding='utf-8'),
+        logging.FileHandler('logs/taximeter.log', encoding='utf-8'),
         logging.StreamHandler()
     ]
 )

@@ -114,14 +114,15 @@ Total fare: €1.31
 Digital-Taximeter/
 ├── main.py                 # 🚕 Programa principal (ejecutable)
 ├── taximeter.ipynb         # 📓 Versión interactiva en Jupyter
-├── taximeter.log           # 📋 Archivo de logs automático  
+├── logs/                   # 📋 Directorio de archivos de log
+│   └── taximeter.log       # 📄 Registro de actividades
 └── README.md               # 📖 Documentación del proyecto
 ```
 
 ### 📋 **Descripción de archivos:**
 - **`main.py`**: Versión de producción, optimizada para ejecutar desde terminal
 - **`taximeter.ipynb`**: Versión educativa e interactiva para experimentación
-- **`taximeter.log`**: Registro automático de todas las actividades
+- **`logs/taximeter.log`**: Registro automático de todas las actividades
 - **`README.md`**: Documentación completa del proyecto
 
 ## � Dual Development Strategy
@@ -157,9 +158,9 @@ Función principal que maneja la interfaz de usuario y la lógica del taxímetro
 
 El proyecto incluye un sistema de logging simple para la trazabilidad:
 
-- **Archivo de logs**: `taximeter.log` (creado automáticamente)
+- **Archivo de logs**: `logs/taximeter.log` (creado automáticamente)
 - **Formato**: Timestamp + mensaje
-- **Ubicación**: Mismo directorio del proyecto
+- **Ubicación**: Directorio `logs/` dentro del proyecto
 - **Salida dual**: Archivo + consola
 - **Codificación**: UTF-8 para caracteres especiales
 
