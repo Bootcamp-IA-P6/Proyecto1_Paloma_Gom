@@ -180,6 +180,10 @@ $RECYCLE.BIN/
 # Mantener logs para tracking del proyecto
 # taximeter.log
 
+# Avoid unnecessary utility files
+utils.py
+config.py
+
 # Temporary files
 *.tmp
 *.bak
