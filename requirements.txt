@@ -1,0 +1,14 @@
+# Digital Taximeter - Dependencies
+# Core dependencies for enhanced terminal experience
+
+# Terminal enhancement
+colorama>=0.4.6          # Cross-platform colored terminal output
+rich>=13.7.0             # Rich text and beautiful formatting for terminal
+
+# Testing (optional - for enhanced test experience)
+pytest>=7.4.0            # Modern testing framework
+pytest-cov>=4.1.0        # Coverage reports for tests
+
+# Development tools (optional)
+# black>=23.0.0          # Code formatter
+# flake8>=6.0.0          # Linting

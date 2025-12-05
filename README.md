@@ -34,8 +34,23 @@ Digital Taximeter es una aplicación de consola que simula el comportamiento de 
 - Python 3.6 o superior
 
 ### **Instalación básica:**
-1. Clona o descarga este repositorio
-2. No se requieren dependencias externas para `main.py`
+```bash
+# Clonar o descargar el repositorio
+git clone https://github.com/Pal-cloud/Digital-Taximeter.git
+cd Digital-Taximeter
+
+# Instalar dependencias (recomendado)
+pip install -r requirements.txt
+
+# O ejecutar sin dependencias (funcionalidad básica)
+python main.py
+```
+
+### **Dependencias incluidas:**
+- **`colorama`** - Colores en terminal (multiplataforma)
+- **`rich`** - Terminal rica con formato avanzado  
+- **`pytest`** - Framework de testing moderno (opcional)
+- **`pytest-cov`** - Reportes de cobertura (opcional)
 
 ### **Para usar Jupyter Notebook (opcional):**
 ```bash
@@ -48,7 +63,7 @@ jupyter --version
 
 ## 📖 Uso
 
-### 🚕 **Ejecutar versión de producción (main.py):**
+### 🚕 **Ejecutar versión de producción:**
 ```bash
 python main.py
 ```
@@ -112,8 +127,10 @@ Total fare: €1.31
 
 ```
 Digital-Taximeter/
-├── main.py                 # 🚕 Programa principal (ejecutable)
+├── main.py                 # 🚕 Programa principal (con colores mejorados)
 ├── taximeter.ipynb         # 📓 Versión interactiva en Jupyter
+├── requirements.txt        # 📦 Dependencias del proyecto
+├── pytest.ini             # ⚙️ Configuración de pytest
 ├── logs/                   # 📋 Directorio de archivos de log
 │   └── taximeter.log       # 📄 Registro de actividades
 ├── tests/                  # 🧪 Tests unitarios
@@ -147,14 +164,20 @@ tests/
 ### **🚀 Ejecutar Tests:**
 
 ```bash
-# Ejecutar todos los tests
+# Opción 1: unittest (estándar)
 python -m unittest discover tests -v
 
-# Tests específicos por módulo
-python -m unittest tests.test_calculate_fare -v
-python -m unittest tests.test_scenarios -v
+# Opción 2: pytest (mejorado, recomendado)
+pytest tests/ -v
 
-# Ejecutar con script personalizado
+# Con coverage report
+pytest tests/ --cov=main --cov-report=html
+
+# Tests específicos
+python -m unittest tests.test_calculate_fare -v
+pytest tests/test_calculate_fare.py -v
+
+# Script personalizado
 python tests/run_tests.py
 ```
 
