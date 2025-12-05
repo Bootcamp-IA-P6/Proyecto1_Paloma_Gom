@@ -1,6 +1,18 @@
 # GitHub Linguist configuration for Digital Taximeter
 # Force GitHub to recognize this as a Python project
 
+# Reduce the weight of Jupyter notebooks in language detection
+*.ipynb linguist-detectable=false
+
+# Ensure Python files are properly detected and prioritized
+*.py linguist-language=Python
+
+# Mark other key files
+*.md linguist-documentation
+*.txt linguist-documentation
+*.ini linguist-generateduist configuration for Digital Taximeter
+# Force GitHub to recognize this as a Python project
+
 # Mark Jupyter notebooks as documentation instead of code
 *.ipynb linguist-documentation
 
