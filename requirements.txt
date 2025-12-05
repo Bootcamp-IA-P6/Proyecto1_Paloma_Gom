@@ -9,6 +9,6 @@ rich>=13.7.0             # Rich text and beautiful formatting for terminal
 pytest>=7.4.0            # Modern testing framework
 pytest-cov>=4.1.0        # Coverage reports for tests
 
-# Development tools (optional)
-# black>=23.0.0          # Code formatter
-# flake8>=6.0.0          # Linting
+# Jupyter support (optional - for notebook experience)
+jupyter>=1.0.0           # Jupyter notebook support
+ipykernel>=6.25.0        # IPython kernel for Jupyter

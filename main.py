@@ -22,7 +22,6 @@ logging.basicConfig(
     ]
 )
 
-# ASCII Art para el taxi
 TAXI_FRAMES = [
     "    🚕💨     ",
     "   🚕💨      ",
@@ -36,7 +35,7 @@ TAXI_FRAMES = [
 
 TAXI_LOGO = """
 ╔════════════════════════════════════════════╗
-║           🚕 DIGITAL TAXIMETER 🚕           ║
+║           🚕 DIGITAL TAXIMETER 🚕         ║
 ║                                            ║
 ║    Professional Fare Calculation System    ║
 ╚════════════════════════════════════════════╝
@@ -49,6 +48,8 @@ HELP_MENU = """
 │ 🛑 stop    │ Set taxi to stopped state  │
 │ 🚗 move    │ Set taxi to moving state   │
 │ 🏁 finish  │ Complete trip & calculate  │
+│ 📊 status  │ Show current trip status   │
+│ 📋 help    │ Show this menu             │
 │ 🚪 exit    │ Exit the application       │
 └─────────────────────────────────────────┘
 """
