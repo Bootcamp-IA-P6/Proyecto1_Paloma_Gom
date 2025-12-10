@@ -71,18 +71,18 @@ def display_welcome():
         welcome_text = Text("🚖 Taxímetro Digital Profesional 🚕", style="bold yellow")
         console.print(Panel.fit(welcome_text, title="¡Bienvenido!"))
         
-        # Commands table
-        table = Table(title="📋 Comandos Disponibles", show_header=True, header_style="bold cyan")
-        table.add_column("Comando", style="green", width=12)
+        # Commands table - sin anchuras específicas para evitar cortes
+        table = Table(title="📋 Comandos Disponibles", show_header=True, header_style="bold cyan", expand=False)
+        table.add_column("Comando", style="green")
         table.add_column("Descripción", style="white")
         table.add_column("Uso", style="yellow")
         
-        table.add_row("🚀 start", "Iniciar un nuevo viaje", "Escribe: start")
-        table.add_row("🛑 stop", "Poner taxi en estado parado", "Escribe: stop")
-        table.add_row("🏃 move", "Poner taxi en movimiento", "Escribe: move")
-        table.add_row("🏁 finish", "Terminar viaje y calcular tarifa", "Escribe: finish")
-        table.add_row("❓ help", "Mostrar esta tabla de comandos", "Escribe: help")
-        table.add_row("🚪 exit", "Salir de la aplicación", "Escribe: exit")
+        table.add_row("[green]🚀 start[/green]", "Iniciar viaje", "[cyan]start[/cyan]")
+        table.add_row("[red]🛑 stop[/red]", "Taxi parado", "[cyan]stop[/cyan]")
+        table.add_row("[green]🏃 move[/green]", "Taxi moviendo", "[cyan]move[/cyan]")
+        table.add_row("[blue]🏁 finish[/blue]", "Terminar viaje", "[cyan]finish[/cyan]")
+        table.add_row("[yellow]❓ help[/yellow]", "Ver comandos", "[cyan]help[/cyan]")
+        table.add_row("[magenta]🚪 exit[/magenta]", "Salir", "[cyan]exit[/cyan]")
         
         console.print(table)
         console.print("\n[bold cyan]💡 Consejo:[/] Alterna entre 'stop' y 'move' durante tu viaje, luego usa 'finish' para obtener la tarifa total.")
