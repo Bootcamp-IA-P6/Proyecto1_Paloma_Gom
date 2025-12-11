@@ -165,6 +165,7 @@ jupyter notebook
 ### 🎨 **Experiencia Visual:**
 La aplicación incluye una interfaz completamente colorida con:
 - 🚖 **Animación de bienvenida**: Taxi moviéndose al iniciar
+- 🚕 **Animación de despedida**: Taxi alejándose al salir
 - 🎨 **Prompts dinámicos**: El símbolo cambia según el estado
 - 📋 **Tablas organizadas**: Comandos en diseños visuales atractivos
 - 🌈 **Colores dinámicos**: Diferentes colores para cada tipo de información
@@ -436,6 +437,7 @@ El proyecto incluye un sistema de logging simple para la trazabilidad:
 
 #### 🎨 **Interfaz Visual Completamente Rediseñada:**
 - **Animación de bienvenida** con taxi moviéndose
+- **Animación de despedida** con taxi alejándose al salir
 - **Colores dinámicos** en toda la interfaz usando `colorama`
 - **Prompts inteligentes** que cambian según el estado del taxi
 - **Tablas visuales** organizadas y atractivas
