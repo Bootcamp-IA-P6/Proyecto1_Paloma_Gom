@@ -1,0 +1,1 @@
+2025-12-11 09:30:00 | Parado: 8.1s | Movimiento: 18.5s | Total: 26.6s | Tarifa: €1.09

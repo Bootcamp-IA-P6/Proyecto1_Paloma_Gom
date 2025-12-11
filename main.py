@@ -62,59 +62,139 @@ def calculate_fare(seconds_stopped, seconds_moving):
     
     return fare
 
+def save_trip_to_history(stopped_time, moving_time, total_fare):
+    """Guardar viaje en historial de forma simple"""
+    try:
+        from datetime import datetime
+        
+        # Crear línea del historial
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        duration_total = stopped_time + moving_time
+        
+        trip_line = f"{now} | Parado: {stopped_time:.1f}s | Movimiento: {moving_time:.1f}s | Total: {duration_total:.1f}s | Tarifa: €{total_fare:.2f}\n"
+        
+        # Guardar en archivo
+        with open('logs/historial_viajes.txt', 'a', encoding='utf-8') as f:
+            f.write(trip_line)
+            
+    except Exception as e:
+        logging.warning(f"Error guardando historial: {e}")
+
+def show_trip_history():
+    """Mostrar últimos 5 viajes del historial"""
+    try:
+        if not os.path.exists('logs/historial_viajes.txt'):
+            if COLORS_AVAILABLE:
+                print(f"{Fore.YELLOW}📭 No hay viajes en el historial aún.{Style.RESET_ALL}")
+            else:
+                print("📭 No hay viajes en el historial aún.")
+            return
+            
+        with open('logs/historial_viajes.txt', 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        
+        if not lines:
+            if COLORS_AVAILABLE:
+                print(f"{Fore.YELLOW}📭 No hay viajes en el historial aún.{Style.RESET_ALL}")
+            else:
+                print("📭 No hay viajes en el historial aún.")
+            return
+            
+        # Mostrar últimos 5 viajes
+        recent_trips = lines[-5:]
+        
+        if COLORS_AVAILABLE:
+            print(f"\n{Fore.CYAN}📜 HISTORIAL DE VIAJES (últimos 5):{Style.RESET_ALL}")
+        else:
+            print("\n📜 HISTORIAL DE VIAJES (últimos 5):")
+            
+        for i, trip in enumerate(recent_trips, 1):
+            if COLORS_AVAILABLE:
+                print(f"{Fore.YELLOW}{i}. {trip.strip()}{Style.RESET_ALL}")
+            else:
+                print(f"{i}. {trip.strip()}")
+        print()
+        
+    except Exception as e:
+        logging.warning(f"Error leyendo historial: {e}")
+        if COLORS_AVAILABLE:
+            print(f"{Fore.RED}❌ Error leyendo historial.{Style.RESET_ALL}")
+        else:
+            print("❌ Error leyendo historial.")
+
 def display_welcome():
     """Mostrar mensaje de bienvenida con formato mejorado y tabla de comandos en español"""
     if RICH_AVAILABLE:
         from rich.table import Table
         
-        # Header
+        # Header elegante
         welcome_text = Text("🚖 Taxímetro Digital Profesional 🚕", style="bold yellow")
-        console.print(Panel.fit(welcome_text, title="¡Bienvenido!"))
+        console.print(Panel.fit(welcome_text, title="[bold cyan]¡Bienvenido![/]", style="cyan"))
+        console.print()
         
-        # Commands table - sin anchuras específicas para evitar cortes
-        table = Table(title="📋 Comandos Disponibles", show_header=True, header_style="bold cyan", expand=False)
-        table.add_column("Comando", style="green")
-        table.add_column("Descripción", style="white")
-        table.add_column("Uso", style="yellow")
+        # Commands table con mejor diseño
+        table = Table(
+            title="[bold magenta]📋 Comandos Disponibles[/]",
+            show_header=True,
+            header_style="bold cyan",
+            border_style="bright_blue",
+            title_style="bold magenta",
+            expand=False,
+            min_width=60
+        )
         
-        table.add_row("[green]🚀 start[/green]", "Iniciar viaje", "[cyan]start[/cyan]")
-        table.add_row("[red]🛑 stop[/red]", "Taxi parado", "[cyan]stop[/cyan]")
-        table.add_row("[green]🏃 move[/green]", "Taxi moviendo", "[cyan]move[/cyan]")
-        table.add_row("[blue]🏁 finish[/blue]", "Terminar viaje", "[cyan]finish[/cyan]")
-        table.add_row("[yellow]❓ help[/yellow]", "Ver comandos", "[cyan]help[/cyan]")
-        table.add_row("[magenta]🚪 exit[/magenta]", "Salir", "[cyan]exit[/cyan]")
+        table.add_column("🎯 Comando", style="bold green", width=12, justify="center")
+        table.add_column("📝 Descripción", style="white", width=28)
+        table.add_column("💻 Uso", style="bold yellow", width=15, justify="center")
+        
+        # Filas con mejor formato
+        table.add_row("🚀 [green]start[/]", "Iniciar un nuevo viaje", "[cyan]start[/]")
+        table.add_row("🛑 [red]stop[/]", "Poner taxi en estado parado", "[cyan]stop[/]")
+        table.add_row("🏃 [green]move[/]", "Poner taxi en movimiento", "[cyan]move[/]")
+        table.add_row("🏁 [blue]finish[/]", "Terminar viaje y calcular tarifa", "[cyan]finish[/]")
+        table.add_row("📜 [purple]history[/]", "Ver historial de viajes", "[cyan]history[/]")
+        table.add_row("❓ [yellow]help[/]", "Mostrar esta tabla de comandos", "[cyan]help[/]")
+        table.add_row("🚪 [magenta]exit[/]", "Salir de la aplicación", "[cyan]exit[/]")
         
         console.print(table)
-        console.print("\n[bold cyan]💡 Consejo:[/] Alterna entre 'stop' y 'move' durante tu viaje, luego usa 'finish' para obtener la tarifa total.")
+        console.print()
+        console.print(Panel.fit(
+            "[bold cyan]💡 Consejo:[/] Alterna entre 'stop' y 'move' durante tu viaje, luego usa 'finish' para obtener la tarifa total.",
+            style="cyan"
+        ))
+        console.print()
         
     elif COLORS_AVAILABLE:
         print(f"\n{Back.YELLOW}{Fore.BLACK} 🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕 {Style.RESET_ALL}")
         print(f"{Back.CYAN}{Fore.WHITE} 📋 TABLA DE COMANDOS {Style.RESET_ALL}")
-        print("╭──────────────────────────────────────────────────────────╮")
-        print("│ Comando  │ Descripción                  │ Uso           │")
-        print("├──────────────────────────────────────────────────────────┤")
-        print(f"│ {Fore.GREEN}🚀 start{Style.RESET_ALL}  │ Iniciar un nuevo viaje       │ Escribe: start│")
-        print(f"│ {Fore.RED}🛑 stop{Style.RESET_ALL}   │ Poner taxi en estado parado  │ Escribe: stop │")
-        print(f"│ {Fore.GREEN}🏃 move{Style.RESET_ALL}   │ Poner taxi en movimiento     │ Escribe: move │")
-        print(f"│ {Fore.CYAN}🏁 finish{Style.RESET_ALL} │ Terminar viaje y calc tarifa │ Escribe: finish│")
-        print(f"│ {Fore.YELLOW}❓ help{Style.RESET_ALL}   │ Mostrar esta tabla           │ Escribe: help │")
-        print(f"│ {Fore.MAGENTA}🚪 exit{Style.RESET_ALL}   │ Salir de la aplicación       │ Escribe: exit │")
-        print("╰──────────────────────────────────────────────────────────╯")
-        print(f"{Fore.CYAN}💡 Consejo: Alterna entre 'stop' y 'move' durante tu viaje, luego 'finish'{Style.RESET_ALL}\n")
+        print("┌──────────┬────────────────────────────────┬───────────────┐")
+        print("│  Comando │ Descripción                    │ Uso           │")
+        print("├──────────┼────────────────────────────────┼───────────────┤")
+        print(f"│ {Fore.GREEN}🚀 start{Style.RESET_ALL}  │ Iniciar un nuevo viaje         │ {Fore.CYAN}start{Style.RESET_ALL}         │")
+        print(f"│ {Fore.RED}🛑 stop{Style.RESET_ALL}   │ Poner taxi en estado parado    │ {Fore.CYAN}stop{Style.RESET_ALL}          │")
+        print(f"│ {Fore.GREEN}🏃 move{Style.RESET_ALL}   │ Poner taxi en movimiento       │ {Fore.CYAN}move{Style.RESET_ALL}          │")
+        print(f"│ {Fore.BLUE}🏁 finish{Style.RESET_ALL} │ Terminar viaje y calc tarifa   │ {Fore.CYAN}finish{Style.RESET_ALL}        │")
+        print(f"│ {Fore.MAGENTA}📜 history{Style.RESET_ALL}│ Ver historial de viajes        │ {Fore.CYAN}history{Style.RESET_ALL}       │")
+        print(f"│ {Fore.YELLOW}❓ help{Style.RESET_ALL}   │ Mostrar esta tabla de comandos │ {Fore.CYAN}help{Style.RESET_ALL}          │")
+        print(f"│ {Fore.MAGENTA}🚪 exit{Style.RESET_ALL}   │ Salir de la aplicación         │ {Fore.CYAN}exit{Style.RESET_ALL}          │")
+        print("└──────────┴────────────────────────────────┴───────────────┘")
+        print(f"\n{Back.CYAN}{Fore.WHITE} 💡 Consejo: Alterna entre 'stop' y 'move' durante tu viaje, luego 'finish' {Style.RESET_ALL}\n")
     else:
-        print("\n🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕")
-        print("=" * 60)
-        print("📋 TABLA DE COMANDOS")
-        print("=" * 60)
-        print("| Comando  | Descripción                  | Uso           |")
-        print("|----------|------------------------------|---------------|")
-        print("| 🚀 start  | Iniciar un nuevo viaje       | Escribe: start|")
-        print("| 🛑 stop   | Poner taxi en estado parado  | Escribe: stop |")
-        print("| 🏃 move   | Poner taxi en movimiento     | Escribe: move |")
-        print("| 🏁 finish | Terminar viaje y calc tarifa | Escribe: finish|")
-        print("| ❓ help   | Mostrar esta tabla           | Escribe: help |")
-        print("| 🚪 exit   | Salir de la aplicación       | Escribe: exit |")
-        print("=" * 60)
+        print("\n" + "="*65)
+        print("🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕".center(65))
+        print("="*65)
+        print("📋 TABLA DE COMANDOS".center(65))
+        print("="*65)
+        print("| Comando  | Descripción                    | Uso           |")
+        print("|----------|--------------------------------|---------------|")
+        print("| 🚀 start  | Iniciar un nuevo viaje         | start         |")
+        print("| 🛑 stop   | Poner taxi en estado parado    | stop          |")
+        print("| 🏃 move   | Poner taxi en movimiento       | move          |")
+        print("| 🏁 finish | Terminar viaje y calc tarifa   | finish        |")
+        print("| 📜 history| Ver historial de viajes        | history       |")
+        print("| ❓ help   | Mostrar esta tabla de comandos | help          |")
+        print("| 🚪 exit   | Salir de la aplicación         | exit          |")
+        print("="*65)
         print("💡 Consejo: Alterna entre 'stop' y 'move' durante tu viaje, luego 'finish'\n")
 
 def taximeter():
@@ -202,6 +282,9 @@ def taximeter():
             logging.info(f"Viaje finalizado - Tiempo parado: {stopped_time:.1f}s, Tiempo movimiento: {moving_time:.1f}s")
             logging.info(f"Tarifa total calculada: €{total_fare:.2f}")
             
+            # Guardar en historial
+            save_trip_to_history(stopped_time, moving_time, total_fare)
+            
             if COLORS_AVAILABLE:
                 print(f"\n{Back.BLUE}{Fore.WHITE} 🧾 --- RESUMEN DEL VIAJE --- 🧾 {Style.RESET_ALL}")
                 print(f"{Fore.YELLOW}🛑 Tiempo parado: {stopped_time:.1f} segundos{Style.RESET_ALL}")
@@ -227,12 +310,14 @@ def taximeter():
             break
         elif command in ['help', 'h', '?']:
             display_welcome()
+        elif command in ['history', 'hist']:
+            show_trip_history()
         else:
             logging.warning(f"Comando inválido recibido: '{command}'")
             if COLORS_AVAILABLE:
-                print(f"{Fore.RED}❓ Comando inválido. Usa 'start', 'stop', 'move', 'finish', 'help', o 'exit'.{Style.RESET_ALL}")
+                print(f"{Fore.RED}❓ Comando inválido. Usa 'start', 'stop', 'move', 'finish', 'history', 'help', o 'exit'.{Style.RESET_ALL}")
             else:
-                print("❓ Comando inválido. Usa 'start', 'stop', 'move', 'finish', 'help', o 'exit'.")
+                print("❓ Comando inválido. Usa 'start', 'stop', 'move', 'finish', 'history', 'help', o 'exit'.")
 
 if __name__ == "__main__":
     logging.info("🚀 Iniciando Taxímetro Digital")
