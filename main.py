@@ -124,47 +124,8 @@ def show_trip_history():
 
 def display_welcome():
     """Mostrar mensaje de bienvenida con formato mejorado y tabla de comandos en español"""
-    if RICH_AVAILABLE:
-        from rich.table import Table
-        
-        # Header elegante
-        welcome_text = Text("🚖 Taxímetro Digital Profesional 🚕", style="bold yellow")
-        console.print(Panel.fit(welcome_text, title="[bold cyan]¡Bienvenido![/]", style="cyan"))
-        console.print()
-        
-        # Commands table con mejor diseño
-        table = Table(
-            title="[bold magenta]📋 Comandos Disponibles[/]",
-            show_header=True,
-            header_style="bold cyan",
-            border_style="bright_blue",
-            title_style="bold magenta",
-            expand=False,
-            min_width=60
-        )
-        
-        table.add_column("🎯 Comando", style="bold green", width=12, justify="center")
-        table.add_column("📝 Descripción", style="white", width=28)
-        table.add_column("💻 Uso", style="bold yellow", width=15, justify="center")
-        
-        # Filas con mejor formato
-        table.add_row("🚀 [green]start[/]", "Iniciar un nuevo viaje", "[cyan]start[/]")
-        table.add_row("🛑 [red]stop[/]", "Poner taxi en estado parado", "[cyan]stop[/]")
-        table.add_row("🏃 [green]move[/]", "Poner taxi en movimiento", "[cyan]move[/]")
-        table.add_row("🏁 [blue]finish[/]", "Terminar viaje y calcular tarifa", "[cyan]finish[/]")
-        table.add_row("📜 [purple]history[/]", "Ver historial de viajes", "[cyan]history[/]")
-        table.add_row("❓ [yellow]help[/]", "Mostrar esta tabla de comandos", "[cyan]help[/]")
-        table.add_row("🚪 [magenta]exit[/]", "Salir de la aplicación", "[cyan]exit[/]")
-        
-        console.print(table)
-        console.print()
-        console.print(Panel.fit(
-            "[bold cyan]💡 Consejo:[/] Alterna entre 'stop' y 'move' durante tu viaje, luego usa 'finish' para obtener la tarifa total.",
-            style="cyan"
-        ))
-        console.print()
-        
-    elif COLORS_AVAILABLE:
+    # Forzar el uso de la tabla azul con líneas continuas
+    if COLORS_AVAILABLE:
         print(f"\n{Back.YELLOW}{Fore.BLACK} 🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕 {Style.RESET_ALL}")
         print(f"{Back.CYAN}{Fore.WHITE} 📋 TABLA DE COMANDOS {Style.RESET_ALL}")
         print("┌──────────┬────────────────────────────────┬───────────────┐")
