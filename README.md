@@ -4,11 +4,11 @@
 ╔══════════════════════════════════════════════════════════════╗
 ║                    DIGITAL TAXIMETER                         ║
 ║                  Sistema de Taxímetro Digital                ║
-║                         🚕 v1.0 🚕                          ║
+║                         🚕 v2.0 🚕                          ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
-Un sistema de taxímetro digital desarrollado en Python que simula el funcionamiento de un taxímetro real con diferentes estados y cálculo de tarifas.
+Un sistema de taxímetro digital profesional desarrollado en Python que simula el funcionamiento de un taxímetro real con diferentes estados, múltiples perfiles de tarifas, historial de viajes y una interfaz visual mejorada.
 
 ## 📋 Descripción
 
@@ -16,17 +16,68 @@ Digital Taximeter es una aplicación de consola que simula el comportamiento de 
 
 ## 🚀 Características
 
+### 🚕 **Funcionalidades Principal del Taxímetro:**
 - **Control de viaje**: Iniciar, pausar y finalizar viajes
 - **Estados dinámicos**: Alternar entre estado "detenido" y "en movimiento"
 - **Cálculo de tarifas**: Sistema de tarifas diferenciadas por estado
 - **Resumen de viaje**: Información detallada al finalizar cada viaje
 - **Interfaz intuitiva**: Comandos simples y claros
+
+### 🎨 **Experiencia Visual Mejorada:**
+- **Interfaz colorida**: Terminal con colores dinámicos usando `colorama`
+- **Animación de bienvenida**: Taxi moviéndose al iniciar la aplicación
+- **Prompts dinámicos**: El prompt cambia según el estado del taxi (parado/movimiento)
+- **Tablas visuales**: Comandos organizados en diseños atractivos
+- **Emojis y símbolos**: Interfaz moderna y visual
+
+### 💰 **Sistema de Tarifas Dinámicas:**
+- **Múltiples perfiles**: 5 perfiles de tarifas diferentes
+- **Cambio en tiempo real**: Cambiar tarifas durante la operación
+- **Comando `precios`**: Ver y cambiar perfiles fácilmente
+- **Adaptación situacional**: Tarifas para diferentes escenarios
+
+### 📜 **Historial y Registro:**
+- **Historial de viajes**: Guarda automáticamente todos los viajes
+- **Comando `history`**: Ver últimos 5 viajes con diseño colorido
 - **Sistema de logging**: Registro automático de actividades para trazabilidad
+- **Persistencia de datos**: Los viajes se guardan en archivos de texto
 
-## 💰 Sistema de Tarifas
+### 🔧 **Características Técnicas:**
+- **Compatibilidad multiplataforma**: Windows, Linux, macOS
+- **Codificación UTF-8**: Soporte completo para caracteres especiales
+- **Manejo de errores**: Validaciones robustas y mensajes claros
+- **Suite de tests**: 12 tests unitarios completos
 
-- **Tiempo detenido**: €0.02 por segundo
-- **Tiempo en movimiento**: €0.05 por segundo
+## 💰 Sistema de Tarifas Dinámicas
+
+El sistema incluye **5 perfiles de tarifas** diferentes para adaptarse a distintas situaciones:
+
+### 📋 **Perfiles Disponibles:**
+
+| Perfil | Descripción | Parado (€/s) | Movimiento (€/s) | Comando |
+|--------|-------------|--------------|------------------|---------|
+| 🟢 **Normal** | Condiciones normales de tráfico | €0.02 | €0.05 | `normal` |
+| 🔴 **Alta** | Zona concurrida / Alta demanda | €0.03 | €0.08 | `alta` |
+| 🌙 **Nocturna** | Tarifa nocturna (22:00-06:00) | €0.025 | €0.06 | `nocturna` |
+| ✈️ **Aeropuerto** | Aeropuerto / Estaciones | €0.04 | €0.10 | `aeropuerto` |
+| 🎉 **Festivo** | Días festivos / Fin de semana | €0.035 | €0.09 | `festivo` |
+
+### 🔄 **Cambio de Tarifas:**
+```bash
+# Ver todas las tarifas disponibles
+🚖 > precios
+
+# Cambiar directamente a una tarifa
+🚖 > alta
+🚖 > nocturna
+🚖 > aeropuerto
+```
+
+### ✨ **Características del Sistema:**
+- **Cambio en tiempo real**: Puedes cambiar tarifas durante un viaje
+- **Persistencia**: El perfil seleccionado se mantiene entre viajes
+- **Visual**: Interfaz colorida para mostrar todas las opciones
+- **Validación**: Verificación automática de comandos válidos
 
 ## 🛠️ Instalación
 
@@ -92,60 +143,133 @@ jupyter notebook
 
 ### Comandos Disponibles
 
+### 🚕 **Comandos Principales:**
 - `start` - Iniciar un nuevo viaje (estado inicial: detenido)
 - `stop` - Cambiar el estado a "detenido"
 - `move` - Cambiar el estado a "en movimiento"
 - `finish` - Finalizar el viaje y mostrar el resumen con la tarifa total
 - `exit` - Salir de la aplicación
 
+### 📋 **Comandos de Información:**
+- `help` - Mostrar la lista completa de comandos
+- `history` - Ver historial de los últimos 5 viajes
+- `precios` - Ver y cambiar perfiles de tarifas
+
+### 💰 **Comandos de Tarifas:**
+- `normal` - Cambiar a tarifa normal
+- `alta` - Cambiar a tarifa de demanda alta
+- `nocturna` - Cambiar a tarifa nocturna
+- `aeropuerto` - Cambiar a tarifa de aeropuerto
+- `festivo` - Cambiar a tarifa de día festivo
+
+### 🎨 **Experiencia Visual:**
+La aplicación incluye una interfaz completamente colorida con:
+- 🚖 **Animación de bienvenida**: Taxi moviéndose al iniciar
+- 🎨 **Prompts dinámicos**: El símbolo cambia según el estado
+- 📋 **Tablas organizadas**: Comandos en diseños visuales atractivos
+- 🌈 **Colores dinámicos**: Diferentes colores para cada tipo de información
+
 ### Ejemplo de Uso
 
 ```
-Welcome to Digital Taxi
-Available commands:'start', 'stop', 'move', 'finish', 'exit'
+🚕 Cargando Taxímetro Digital...
+🚖💨🚖💨🚖💨🚖💨🚖💨🚖💨¡Listo! ✨
 
-> start
-Trip started. Initial state: 'stopped'
+ 🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕 
+ 📋 COMANDOS DISPONIBLES 
 
-> move
-State changed to 'moving'.
+============================================================
+                    COMANDOS DEL TAXÍMETRO
+============================================================
 
-> stop
-State changed to 'stopped'.
+  🚀 start    → Iniciar un nuevo viaje
+  🛑 stop     → Poner taxi en estado parado
+  🏃 move     → Taxi en movimiento
+  🏁 finish   → Finalizar viaje y calcular tarifa
+  📜 history  → Ver historial de viajes
+  💰 precios  → Ver y cambiar tarifas
+  ❓ help     → Mostrar esta lista de comandos
+  🚪 exit     → Salir de la aplicación
 
-> finish
-Este es el total: 1.25€
+============================================================
 
---- Trip Summary ---
-Stopped time: 15.3 seconds
-Moving time: 20.1 seconds
-Total fare: €1.31
----------------------
+ 💡 Consejo: Usa 'start' → 'stop'/'move' → 'finish' 
+
+🚖 > start
+✅ ¡Viaje iniciado! Estado inicial: 'parado' 🛑
+
+🚖 🛑 PARADO > move
+🏃 Estado cambiado a: 'en movimiento'
+
+🚖 🏃💨 EN MOVIMIENTO > stop
+🛑 Estado cambiado a: 'parado'
+
+🚖 🛑 PARADO > precios
+
+ 💰 PERFILES DE TARIFAS DISPONIBLES 💰 
+
+➤ Normal           (ACTIVO)
+  Comando: normal     🛑 €0.02/s  🏃 €0.05/s
+
+  Demanda Alta   
+  Comando: alta       🛑 €0.03/s  🏃 €0.08/s
+
+💡 Para cambiar: escribe el comando del perfil (ej: 'alta', 'nocturna')
+
+🚖 🛑 PARADO > alta
+
+ 💼 PERFIL CAMBIADO 💼 
+✅ Nuevo perfil: Demanda Alta
+🛑 Tarifa parado: €0.03/segundo
+🏃 Tarifa movimiento: €0.08/segundo
+
+🚖 🛑 PARADO > finish
+
+💰 Total calculado: €2.45 🎯
+📊 Perfil activo: Demanda Alta
+
+ 🧾 --- RESUMEN DEL VIAJE --- 🧾 
+🛑 Tiempo parado: 15.3 segundos
+🏃 Tiempo en movimiento: 20.1 segundos
+💰 Tarifa total: €2.45
+ 🎯 -------------------------- 🎯 
+
+🚖 > history
+
+ 📜 HISTORIAL DE VIAJES (últimos 1) 📜 
+
+# 1 📅 2025-12-11 12:45:30
+    🛑 Parado: 15.3s  🏃 Movimiento: 20.1s
+    ⏱️  Total: 35.4s  💰 Tarifa: €2.45
+
+💼 Total de viajes registrados: 1
 ```
 
 ## 🏗️ Estructura del Proyecto
 
 ```
 Digital-Taximeter/
-├── main.py                 # 🚕 Programa principal (con colores mejorados)
+├── main.py                 # 🚕 Programa principal (optimizado v2.0)
 ├── taximeter.ipynb         # 📓 Versión interactiva en Jupyter
 ├── requirements.txt        # 📦 Dependencias del proyecto
 ├── pytest.ini             # ⚙️ Configuración de pytest
 ├── logs/                   # 📋 Directorio de archivos de log
-│   └── taximeter.log       # 📄 Registro de actividades
-├── tests/                  # 🧪 Tests unitarios
+│   ├── taximeter.log       # 📄 Registro de actividades
+│   └── historial_viajes.txt # 📜 Historial de viajes completados
+├── tests/                  # 🧪 Tests unitarios (12 tests)
 │   ├── __init__.py         # 📦 Paquete de tests
 │   ├── test_calculate_fare.py  # 🧮 Tests de cálculo de tarifas
 │   ├── test_scenarios.py   # 🌟 Tests de escenarios reales
 │   └── run_tests.py        # ▶️ Script para ejecutar tests
-└── README.md               # 📖 Documentación del proyecto
+└── README.md               # 📖 Documentación completa
 ```
 
 ### 📋 **Descripción de archivos:**
-- **`main.py`**: Versión de producción, optimizada para ejecutar desde terminal
+- **`main.py`**: Versión de producción v2.0 con interfaz colorida, tarifas dinámicas e historial
 - **`taximeter.ipynb`**: Versión educativa e interactiva para experimentación
-- **`logs/taximeter.log`**: Registro automático de todas las actividades
-- **`README.md`**: Documentación completa del proyecto
+- **`logs/taximeter.log`**: Registro automático de todas las actividades del sistema
+- **`logs/historial_viajes.txt`**: Historial persistente de todos los viajes completados
+- **`README.md`**: Documentación completa con todas las nuevas características
 
 ## 🧪 Testing
 
@@ -288,9 +412,59 @@ El proyecto incluye un sistema de logging simple para la trazabilidad:
 
 ## 🎯 Casos de Uso
 
-- **Educativo**: Aprender sobre sistemas de tiempo real y cálculo de tarifas
-- **Simulación**: Entender el funcionamiento de un taxímetro
-- **Prototipo**: Base para desarrollar sistemas de facturación más complejos
+### 🎓 **Educativo:**
+- Aprender sobre sistemas de tiempo real y cálculo de tarifas
+- Entender programación orientada a eventos
+- Estudiar manejo de archivos y persistencia de datos
+- Practicar testing unitario y desarrollo basado en pruebas
+
+### 🚕 **Simulación:**
+- Simular el funcionamiento real de un taxímetro
+- Probar diferentes escenarios de tráfico y tarifas
+- Entrenar operadores de taxi con diferentes perfiles de tarifa
+- Analizar costos de viajes en diferentes horarios y zonas
+
+### 🔧 **Prototipo:**
+- Base para desarrollar sistemas de facturación más complejos
+- Framework para aplicaciones de transporte
+- Plantilla para sistemas de medición de tiempo
+- Fundación para aplicaciones móviles de taxi
+
+## 📈 Novedades v2.0
+
+### 🆕 **Características Nuevas:**
+
+#### 🎨 **Interfaz Visual Completamente Rediseñada:**
+- **Animación de bienvenida** con taxi moviéndose
+- **Colores dinámicos** en toda la interfaz usando `colorama`
+- **Prompts inteligentes** que cambian según el estado del taxi
+- **Tablas visuales** organizadas y atractivas
+- **Emojis y símbolos** para una experiencia moderna
+
+#### 💰 **Sistema de Tarifas Dinámicas:**
+- **5 perfiles de tarifas** diferentes (Normal, Alta, Nocturna, Aeropuerto, Festivo)
+- **Comando `precios`** para ver y cambiar tarifas fácilmente
+- **Cambio en tiempo real** durante los viajes
+- **Visualización colorida** de todas las opciones disponibles
+
+#### 📜 **Historial de Viajes Completo:**
+- **Guardado automático** de todos los viajes en `logs/historial_viajes.txt`
+- **Comando `history`** para ver los últimos 5 viajes
+- **Formato visual colorido** con separadores y emojis
+- **Persistencia de datos** entre sesiones
+
+#### 🔧 **Mejoras Técnicas:**
+- **Compatibilidad mejorada** con Windows (UTF-8)
+- **Manejo robusto de errores** con validaciones
+- **Logging expandido** con más eventos registrados
+- **Código optimizado** y mejor estructurado
+
+### 🏆 **Beneficios de la v2.0:**
+- ✨ **Experiencia de usuario profesional** con interfaz colorida
+- 🎯 **Flexibilidad operativa** con múltiples perfiles de tarifas
+- 📊 **Trazabilidad completa** con historial y logs detallados
+- 🛡️ **Mayor robustez** con mejor manejo de errores
+- 🚀 **Facilidad de uso** con comandos intuitivos
 
 ## 🤝 Contribuciones
 
@@ -311,12 +485,23 @@ El sistema incluye validaciones para:
 
 ## 🔮 Futuras Mejoras
 
-- [ ] Interfaz gráfica con tkinter
-- [ ] Guardado de historial de viajes
-- [ ] Configuración de tarifas personalizables
+### ✅ **Completado en v2.0:**
+- [x] ~~Configuración de tarifas personalizables~~ → **5 perfiles implementados**
+- [x] ~~Guardado de historial de viajes~~ → **Sistema completo con comando `history`**
+- [x] ~~Expansión del sistema de logging~~ → **Logging completo de eventos**
+- [x] ~~Interfaz visual mejorada~~ → **Colores, animaciones y diseño profesional**
+
+### 🚀 **Próximas funcionalidades:**
+- [ ] Interfaz gráfica con tkinter o PyQt
 - [ ] Integración con GPS para detección automática de movimiento
 - [ ] Exportación de reportes en CSV/PDF
-- [ ] Expansión del sistema de logging para más eventos
+- [ ] Base de datos SQLite para historial avanzado
+- [ ] API REST para integración con otras aplicaciones
+- [ ] Sistema de usuarios y autenticación
+- [ ] Dashboard web con métricas y estadísticas
+- [ ] Integración con servicios de mapas (Google Maps API)
+- [ ] Notificaciones push y alertas
+- [ ] Sistema de facturación automática
 
 ---
 *Desarrollado con ❤️ en Python*
