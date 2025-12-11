@@ -1,1 +1,5 @@
 2025-12-11 09:30:00 | Parado: 8.1s | Movimiento: 18.5s | Total: 26.6s | Tarifa: €1.09
+2025-12-11 11:21:45 | Parado: 0.0s | Movimiento: 0.0s | Total: 0.0s | Tarifa: €0.00
+2025-12-11 11:39:36 | Parado: 0.0s | Movimiento: 0.0s | Total: 0.0s | Tarifa: €0.00
+2025-12-11 11:44:31 | Parado: 0.0s | Movimiento: 0.0s | Total: 0.0s | Tarifa: €0.00
+2025-12-11 11:55:10 | Parado: 0.0s | Movimiento: 0.0s | Total: 0.0s | Tarifa: €0.00

@@ -81,11 +81,13 @@ def save_trip_to_history(stopped_time, moving_time, total_fare):
         logging.warning(f"Error guardando historial: {e}")
 
 def show_trip_history():
-    """Mostrar últimos 5 viajes del historial"""
+    """Mostrar últimos 5 viajes del historial con diseño simple y colorido"""
     try:
         if not os.path.exists('logs/historial_viajes.txt'):
             if COLORS_AVAILABLE:
-                print(f"{Fore.YELLOW}📭 No hay viajes en el historial aún.{Style.RESET_ALL}")
+                print(f"\n{Back.YELLOW}{Fore.BLACK} 📭 HISTORIAL VACÍO 📭 {Style.RESET_ALL}")
+                print(f"{Fore.CYAN}No hay viajes registrados aún.{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}💡 Realiza tu primer viaje con: {Fore.YELLOW}start{Style.RESET_ALL}\n")
             else:
                 print("📭 No hay viajes en el historial aún.")
             return
@@ -95,23 +97,56 @@ def show_trip_history():
         
         if not lines:
             if COLORS_AVAILABLE:
-                print(f"{Fore.YELLOW}📭 No hay viajes en el historial aún.{Style.RESET_ALL}")
+                print(f"\n{Back.YELLOW}{Fore.BLACK} 📭 HISTORIAL VACÍO 📭 {Style.RESET_ALL}")
+                print(f"{Fore.CYAN}No hay viajes registrados aún.{Style.RESET_ALL}")
+                print(f"{Fore.GREEN}💡 Realiza tu primer viaje con: {Fore.YELLOW}start{Style.RESET_ALL}\n")
             else:
                 print("📭 No hay viajes en el historial aún.")
             return
             
-        # Mostrar últimos 5 viajes
+        # Mostrar últimos 5 viajes con diseño simple
         recent_trips = lines[-5:]
         
         if COLORS_AVAILABLE:
-            print(f"\n{Fore.CYAN}📜 HISTORIAL DE VIAJES (últimos 5):{Style.RESET_ALL}")
+            print(f"\n{Back.BLUE}{Fore.WHITE} 📜 HISTORIAL DE VIAJES (últimos {len(recent_trips)}) 📜 {Style.RESET_ALL}\n")
+            
+            for i, trip in enumerate(recent_trips, 1):
+                # Parsear la línea del viaje para extraer información
+                parts = trip.strip().split(' | ')
+                if len(parts) >= 5:
+                    date_time = parts[0]
+                    stopped_info = parts[1]
+                    moving_info = parts[2] 
+                    total_info = parts[3]
+                    fare_info = parts[4]
+                    
+                    # Alternar colores por viaje
+                    if i % 2 == 1:
+                        number_color = Fore.GREEN
+                        highlight_color = Fore.WHITE
+                    else:
+                        number_color = Fore.YELLOW
+                        highlight_color = Fore.CYAN
+                    
+                    print(f"{number_color}#{i:2} {Fore.MAGENTA}📅 {highlight_color}{date_time}{Style.RESET_ALL}")
+                    print(f"    {Fore.RED}🛑 {highlight_color}{stopped_info}{Style.RESET_ALL}  {Fore.GREEN}🏃 {highlight_color}{moving_info}{Style.RESET_ALL}")
+                    print(f"    {Fore.BLUE}⏱️  {highlight_color}{total_info}{Style.RESET_ALL}  {Fore.YELLOW}💰 {highlight_color}{fare_info}{Style.RESET_ALL}")
+                    if i < len(recent_trips):
+                        print(f"{Fore.CYAN}    ─────────────────────────────────────────{Style.RESET_ALL}")
+                else:
+                    # Fallback para formato simple
+                    if i % 2 == 1:
+                        color = Fore.GREEN
+                    else:
+                        color = Fore.CYAN
+                    print(f"{color}#{i}: {trip.strip()}{Style.RESET_ALL}")
+                    if i < len(recent_trips):
+                        print(f"{Fore.CYAN}    ─────────────────────────────────────────{Style.RESET_ALL}")
+            
+            print(f"\n{Fore.GREEN}💼 Total de viajes registrados: {len(lines)}{Style.RESET_ALL}\n")
         else:
             print("\n📜 HISTORIAL DE VIAJES (últimos 5):")
-            
-        for i, trip in enumerate(recent_trips, 1):
-            if COLORS_AVAILABLE:
-                print(f"{Fore.YELLOW}{i}. {trip.strip()}{Style.RESET_ALL}")
-            else:
+            for i, trip in enumerate(recent_trips, 1):
                 print(f"{i}. {trip.strip()}")
         print()
         
@@ -126,20 +161,33 @@ def display_welcome():
     """Mostrar mensaje de bienvenida con formato mejorado y tabla de comandos en español"""
     # Forzar el uso de la tabla azul con líneas continuas
     if COLORS_AVAILABLE:
+        # Animación del taxi moviéndose
+        print(f"\n{Fore.YELLOW}🚕 Cargando Taxímetro Digital...{Style.RESET_ALL}")
+        time.sleep(0.3)
+        for i in range(20):
+            print(f"\r{' ' * i}🚖💨", end='', flush=True)
+            time.sleep(0.1)
+        print(f"\r{' ' * 20}¡Listo! ✨")
+        time.sleep(0.5)
+        
         print(f"\n{Back.YELLOW}{Fore.BLACK} 🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕 {Style.RESET_ALL}")
-        print(f"{Back.CYAN}{Fore.WHITE} 📋 TABLA DE COMANDOS {Style.RESET_ALL}")
-        print("┌──────────┬────────────────────────────────┬───────────────┐")
-        print("│  Comando │ Descripción                    │ Uso           │")
-        print("├──────────┼────────────────────────────────┼───────────────┤")
-        print(f"│ {Fore.GREEN}🚀 start{Style.RESET_ALL}  │ Iniciar un nuevo viaje         │ {Fore.CYAN}start{Style.RESET_ALL}         │")
-        print(f"│ {Fore.RED}🛑 stop{Style.RESET_ALL}   │ Poner taxi en estado parado    │ {Fore.CYAN}stop{Style.RESET_ALL}          │")
-        print(f"│ {Fore.GREEN}🏃 move{Style.RESET_ALL}   │ Poner taxi en movimiento       │ {Fore.CYAN}move{Style.RESET_ALL}          │")
-        print(f"│ {Fore.BLUE}🏁 finish{Style.RESET_ALL} │ Terminar viaje y calc tarifa   │ {Fore.CYAN}finish{Style.RESET_ALL}        │")
-        print(f"│ {Fore.MAGENTA}📜 history{Style.RESET_ALL}│ Ver historial de viajes        │ {Fore.CYAN}history{Style.RESET_ALL}       │")
-        print(f"│ {Fore.YELLOW}❓ help{Style.RESET_ALL}   │ Mostrar esta tabla de comandos │ {Fore.CYAN}help{Style.RESET_ALL}          │")
-        print(f"│ {Fore.MAGENTA}🚪 exit{Style.RESET_ALL}   │ Salir de la aplicación         │ {Fore.CYAN}exit{Style.RESET_ALL}          │")
-        print("└──────────┴────────────────────────────────┴───────────────┘")
-        print(f"\n{Back.CYAN}{Fore.WHITE} 💡 Consejo: Alterna entre 'stop' y 'move' durante tu viaje, luego 'finish' {Style.RESET_ALL}\n")
+        print(f"{Back.CYAN}{Fore.WHITE} 📋 COMANDOS DISPONIBLES {Style.RESET_ALL}\n")
+        
+        # Diseño visual sin tabla - lista con colores y separadores
+        print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
+        print(f"{Fore.WHITE}                    COMANDOS DEL TAXÍMETRO{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}\n")
+        
+        print(f"  {Fore.GREEN}🚀 start{Style.RESET_ALL}    {Fore.CYAN}→{Style.RESET_ALL} Iniciar un nuevo viaje")
+        print(f"  {Fore.RED}🛑 stop{Style.RESET_ALL}     {Fore.CYAN}→{Style.RESET_ALL} Poner taxi en estado parado") 
+        print(f"  {Fore.GREEN}🏃 move{Style.RESET_ALL}     {Fore.CYAN}→{Style.RESET_ALL} Taxi en movimiento")
+        print(f"  {Fore.BLUE}🏁 finish{Style.RESET_ALL}   {Fore.CYAN}→{Style.RESET_ALL} Finalizar viaje y calcular tarifa")
+        print(f"  {Fore.MAGENTA}📜 history{Style.RESET_ALL}  {Fore.CYAN}→{Style.RESET_ALL} Ver historial de viajes")
+        print(f"  {Fore.YELLOW}❓ help{Style.RESET_ALL}     {Fore.CYAN}→{Style.RESET_ALL} Mostrar esta lista de comandos")
+        print(f"  {Fore.MAGENTA}🚪 exit{Style.RESET_ALL}     {Fore.CYAN}→{Style.RESET_ALL} Salir de la aplicación")
+        
+        print(f"\n{Fore.CYAN}{'=' * 60}{Style.RESET_ALL}")
+        print(f"\n{Back.CYAN}{Fore.WHITE} 💡 Consejo: Usa 'start' → 'stop'/'move' → 'finish' {Style.RESET_ALL}\n")
     else:
         print("\n" + "="*65)
         print("🚖 TAXÍMETRO DIGITAL PROFESIONAL 🚕".center(65))
@@ -171,10 +219,23 @@ def taximeter():
     state_start_time = 0
 
     while True:
+        # Mostrar prompt dinámico con estado del taxi
         if COLORS_AVAILABLE:
-            command = input(f"{Fore.BLUE}🚖 > {Style.RESET_ALL}").strip().lower()
+            if trip_active:
+                if state == 'stopped':
+                    command = input(f"{Fore.BLUE}🚖{Style.RESET_ALL} {Fore.RED}🛑 PARADO{Style.RESET_ALL} {Fore.BLUE}> {Style.RESET_ALL}").strip().lower()
+                else:
+                    command = input(f"{Fore.BLUE}🚖{Style.RESET_ALL} {Fore.GREEN}🏃💨 EN MOVIMIENTO{Style.RESET_ALL} {Fore.BLUE}> {Style.RESET_ALL}").strip().lower()
+            else:
+                command = input(f"{Fore.BLUE}🚖 > {Style.RESET_ALL}").strip().lower()
         else:
-            command = input("🚖 > ").strip().lower()
+            if trip_active:
+                if state == 'stopped':
+                    command = input("🚖 🛑 PARADO > ").strip().lower()
+                else:
+                    command = input("🚖 🏃💨 EN MOVIMIENTO > ").strip().lower()
+            else:
+                command = input("🚖 > ").strip().lower()
 
         if command == 'start':
             if trip_active:
